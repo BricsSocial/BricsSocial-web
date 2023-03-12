@@ -1,0 +1,72 @@
+{
+  "name": "brics-social-web",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "./src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/brics-social-web"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "brics-social-web:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "brics-social-web:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "brics-social-web:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "brics-social-web:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "brics-social-web:build:development"
+        },
+        "production": {
+          "buildTarget": "brics-social-web:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/brics-social-web"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "coverage/brics-social-web"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["./src/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}
