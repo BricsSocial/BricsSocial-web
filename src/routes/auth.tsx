@@ -1,21 +1,31 @@
 import { Navigate, Outlet } from 'react-router';
 
 import { appRoutes } from 'src/constants';
+import { AuthLayout } from 'src/layouts';
+import { SignInPage, SignUpPage } from 'src/pages';
 import { RouteProps } from 'src/types';
 
 export const ROUTES: RouteProps[] = [
   {
     index: true,
-    element: <Navigate to={appRoutes.auth.login} replace />,
+    element: <Navigate to={appRoutes.auth.signin} replace />,
   },
   {
-    path: appRoutes.auth.login,
-    element: <h2>Testing routing</h2>,
+    path: appRoutes.auth.signin,
+    element: <SignInPage />,
+  },
+  {
+    path: appRoutes.auth.signup,
+    element: <SignUpPage />,
   },
 ];
 
-export const AUTH_ROUTES: RouteProps = {
+export const AUTH_ROUTE: RouteProps = {
   path: appRoutes.auth.index,
-  element: <Outlet />,
+  element: (
+    <AuthLayout>
+      <Outlet />
+    </AuthLayout>
+  ),
   childRoutes: ROUTES,
 };

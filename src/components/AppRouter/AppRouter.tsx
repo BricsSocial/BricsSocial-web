@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Route, Routes } from 'react-router';
-import { createBrowserRouter } from 'react-router-dom';
 
 import { NotFoundPage } from 'src/pages';
 import { APP_ROUTES } from 'src/routes';
@@ -16,6 +15,7 @@ const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
     const { element, childRoutes, index, ...restProps } = routeProps;
 
     return (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       <Route index={index as any} key={routeProps.path || 'index'} element={element} {...restProps}>
         {!index && renderNestedRoutes(childRoutes)}
       </Route>
@@ -27,21 +27,12 @@ const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
 
 export const AppRouter: React.FC = () => {
   const routes = React.useMemo(() => traverseRoutesTree(APP_ROUTES), []);
-  console.log(routes);
 
   return (
     <Routes>
-      {/* {routes.map(({ element, childRoutes, index, ...routeProps }) => (
-        <Route key={routeProps.path || 'index'} {...routeProps} element={element}>
-          {renderNestedRoutes(childRoutes)}
-        </Route>
-      ))} */}
       {renderNestedRoutes(routes)}
-      {/* <Route></Route> */}
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
-
-  // const router = createBrowserRouter()
 };

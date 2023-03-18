@@ -1,7 +1,13 @@
+// Home routes
+
+export const home = {
+  index: '/',
+};
+
 // Auth routes
 
 export const auth = {
   index: '/auth',
-  login: '/auth/login',
+  signin: '/auth/signin',
   signup: '/auth/signup',
 } as const;
