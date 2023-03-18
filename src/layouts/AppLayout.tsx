@@ -4,20 +4,25 @@ import {
   AssignmentInd as ResumesIcon,
   Ballot as VacanciesIcon,
   ContactMail as ApplicationIcon,
+  AccountCircle as AccountIcon,
+  MenuOpen as MenuIcon,
 } from '@mui/icons-material';
 import {
   AppBar,
   Box,
   Drawer,
   drawerClasses,
+  Grid,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  SvgIcon,
+  SxProps,
+  Toolbar,
 } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 
 import { BRICS_LOGO } from 'src/assets';
 import { appRoutes } from 'src/constants';
@@ -47,37 +52,80 @@ const menuItems: MenuItem[] = [
 ];
 
 export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const [isMenuOpen, setIsMenuOpen] = React.useState(true);
+
   return (
-    <Box>
+    <Box sx={mainContainerStyles}>
       <Drawer
         anchor="left"
-        transitionDuration={300}
         variant="permanent"
+        open={isMenuOpen}
         sx={{
           [`.${drawerClasses.paper}`]: {
-            width: '300px',
+            transition: 'all 0.3s',
+            position: 'relative',
+            width: `${isMenuOpen ? '300' : '60'}px`,
           },
         }}
+        keepMounted
       >
         <img style={{ margin: '20px 0' }} alt="BRICS logo" src={BRICS_LOGO} />
         <List>
           {menuItems.map(item => (
-            <ListItem>
-              <ListItemButton onClick={() => navigate(item.link)}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText>{item.title}</ListItemText>
+            <ListItem key={item.title} sx={{ p: 0 }}>
+              <ListItemButton
+                selected={Boolean(matchPath({ path: item.link, end: false }, location.pathname))}
+                onClick={() => navigate(item.link)}
+                sx={{
+                  py: 2,
+                  ...(!isMenuOpen ? { display: 'flex', justifyContent: 'center' } : null),
+                }}
+              >
+                <ListItemIcon
+                  sx={!isMenuOpen ? { display: 'flex', justifyContent: 'center' } : null}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                {isMenuOpen && <ListItemText>{item.title}</ListItemText>}
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Drawer>
 
-      <Box>
-        <AppBar />
-        {children}
+      <Box sx={appContainerStyles(true)}>
+        <AppBar position="relative" sx={{ width: '100%', background: '#FFF' }}>
+          <Toolbar>
+            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+              <IconButton onClick={() => setIsMenuOpen(isOpen => !isOpen)}>
+                <MenuIcon />
+              </IconButton>
+
+              <IconButton sx={{ alignSelf: 'flex-end' }}>
+                <AccountIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <Box sx={appContentWrapper}>{children}</Box>
       </Box>
     </Box>
   );
+};
+
+const mainContainerStyles: SxProps = {
+  display: 'flex',
+  width: '100%',
+  height: '100vh',
+};
+
+const appContainerStyles = (isDrawedOpened: boolean): SxProps => ({
+  width: '100%',
+});
+
+const appContentWrapper: SxProps = {
+  padding: 4,
 };
