@@ -1,17 +1,22 @@
-import { Outlet } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 
 import { appRoutes } from 'src/constants';
+import { AppLayout } from 'src/layouts';
 import { RouteProps } from 'src/types';
 
 export const ROUTES: RouteProps[] = [
   {
     index: true,
-    element: <h1>Welcome</h1>,
+    element: <Navigate to={appRoutes.resumes.index} replace />,
   },
 ];
 
 export const HOME_ROUTE: RouteProps = {
   path: appRoutes.home.index,
-  element: <Outlet />,
+  element: (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
+  ),
   childRoutes: ROUTES,
 };
