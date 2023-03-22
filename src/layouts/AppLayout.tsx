@@ -127,5 +127,6 @@ const appContainerStyles = (isDrawedOpened: boolean): SxProps => ({
 });
 
 const appContentWrapper: SxProps = {
-  padding: 4,
+  px: 6,
+  py: 4,
 };

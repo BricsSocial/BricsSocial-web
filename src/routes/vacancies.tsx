@@ -2,18 +2,18 @@ import { Outlet } from 'react-router';
 
 import { appRoutes } from 'src/constants';
 import { AppLayout } from 'src/layouts';
-import { ResumePage } from 'src/pages';
+import { VacanciesPage } from 'src/pages';
 import { RouteProps } from 'src/types';
 
 export const ROUTES: RouteProps[] = [
   {
     index: true,
-    element: <ResumePage />,
+    element: <VacanciesPage />,
   },
 ];
 
-export const RESUMES_ROUTE: RouteProps = {
-  path: appRoutes.resumes.index,
+export const VACANCIES_ROUTE: RouteProps = {
+  path: appRoutes.vacancies.index,
   element: (
     <AppLayout>
       <Outlet />
