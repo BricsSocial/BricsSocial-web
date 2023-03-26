@@ -3,8 +3,8 @@ import React from 'react';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
-import { components } from 'src/schema';
-import { getVacancies } from 'src/services/vacancyService';
+import { useRequest } from 'src/hooks';
+import { VacanciesService, VacanciesPaginatedList } from 'src/services';
 
 const columns: GridColDef[] = [
   {
@@ -36,15 +36,7 @@ const columns: GridColDef[] = [
 ];
 
 export const VacanciesPage: React.FC = () => {
-  const [vacancies, setVacancies] = React.useState<components['schemas']['VacancyDto'][]>([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    getVacancies().then(data => {
-      setVacancies(data);
-      setLoading(false);
-    });
-  }, []);
+  const { data, isLoading } = useRequest(VacanciesService.getVacancies);
 
   return (
     <Box>
@@ -53,7 +45,13 @@ export const VacanciesPage: React.FC = () => {
         <Button variant="outlined">Add new vacancy</Button>
       </Grid>
 
-      <DataGrid loading={loading} autoHeight rows={vacancies} columns={columns} checkboxSelection />
+      <DataGrid
+        loading={isLoading}
+        autoHeight
+        rows={data?.items || []}
+        columns={columns}
+        checkboxSelection
+      />
     </Box>
   );
 };

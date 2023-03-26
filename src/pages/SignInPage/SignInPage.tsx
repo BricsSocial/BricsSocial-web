@@ -7,7 +7,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { appRoutes } from 'src/constants';
-import { useAuth } from 'src/hooks';
+import { useAuth, useRequest } from 'src/hooks';
 
 type SignInFormData = {
   email: string;
@@ -29,7 +29,8 @@ export const SignInPage: React.FC = () => {
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
   });
-  const { signIn } = useAuth();
+  const { signIn: signInFn } = useAuth();
+  const { makeRequest: signIn, isLoading } = useRequest(signInFn, true);
 
   const onSubmit = async (data: SignInFormData) => {
     if (await signIn(data)) {
@@ -59,7 +60,7 @@ export const SignInPage: React.FC = () => {
           error={!!errors.password?.message}
           helperText={errors.password?.message}
         />
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={isLoading}>
           Sign in
         </Button>
         <Typography variant="body1" textAlign="center">

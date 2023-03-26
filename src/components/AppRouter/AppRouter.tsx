@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-  Route,
-  Routes,
-  Navigate,
-  useNavigate,
-  useMatch,
-  matchPath,
-  useLocation,
-} from 'react-router-dom';
+import { Route, Routes, Navigate, matchPath, useLocation } from 'react-router-dom';
 
 import { appRoutes } from 'src/constants';
 import { useAuth, useRoutes } from 'src/hooks';

@@ -1,30 +1,10 @@
-import { faker } from '@faker-js/faker';
+import { axiosClient } from 'src/constants';
+import { Components } from 'src/schema';
 
-import { components } from 'src/schema';
-import { fakeFetch } from 'src/utils';
+export type VacanciesPaginatedList = Components.Schemas.PaginatedListVacancyDto;
 
-// const createRandomSkilltag = (): components['schemas']['SkillTagDto'] => ({
-//   id: faker.datatype.number(),
-//   name: faker.hacker.noun(),
-// });
-
-const createRandomVacancy = (): components['schemas']['VacancyDto'] => ({
-  id: faker.datatype.number(),
-  name: faker.helpers.arrayElement([
-    'Frontend Developer',
-    'Backend Developer',
-    'UI Designer',
-    'UX Designer',
-  ]),
-  requirements: faker.lorem.lines(2),
-  offerings: faker.lorem.lines(2),
-  status: faker.helpers.arrayElement([0, 1]),
-  companyId: faker.datatype.number(),
-  skillTags: 'test',
-});
-
-export const getVacancies = async () => {
-  return await fakeFetch(() =>
-    new Array(faker.datatype.number({ min: 5, max: 10 })).fill(null).map(createRandomVacancy),
-  );
-};
+export class VacanciesService {
+  public static getVacancies = async (): Promise<VacanciesPaginatedList> => {
+    return (await (await axiosClient).VacanciesGet()).data;
+  };
+}
