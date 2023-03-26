@@ -1,12 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BrowserRouter, createBrowserRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import { BrowserRouter } from 'react-router-dom';
+
+import { AuthProvider } from 'src/providers';
 
 import { AppRouter } from '../AppRouter';
 
 export function App() {
   return (
     <BrowserRouter>
-      <AppRouter />
+      <SnackbarProvider>
+        <AuthProvider>
+          <AppRouter />
+        </AuthProvider>
+      </SnackbarProvider>
     </BrowserRouter>
   );
 }

@@ -31,5 +31,5 @@
     }
   ],
   "compileOnSave": false,
-  "exclude": ["node_modules", "tmp", "schema.ts"]
+  "exclude": ["node_modules", "tmp", "schema.d.ts"]
 }

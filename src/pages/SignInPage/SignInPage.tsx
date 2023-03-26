@@ -3,10 +3,11 @@ import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, Link, SxProps, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { appRoutes } from 'src/constants';
+import { useAuth } from 'src/hooks';
 
 type SignInFormData = {
   email: string;
@@ -19,6 +20,7 @@ const schema = yup.object({
 });
 
 export const SignInPage: React.FC = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -27,9 +29,16 @@ export const SignInPage: React.FC = () => {
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
   });
+  const { signIn } = useAuth();
+
+  const onSubmit = async (data: SignInFormData) => {
+    if (await signIn(data)) {
+      navigate(appRoutes.home.index);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(console.log)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="column" gap={2} sx={formContainerStyles}>
         <Typography variant="h5" textAlign="center" fontWeight={500}>
           Great to see you again!

@@ -8,8 +8,8 @@ export const auth = {
   signup: '/auth/signup',
 } as const;
 
-export const resumes = {
-  index: '/resumes',
+export const specialists = {
+  index: '/specialists',
 };
 
 export const vacancies = {

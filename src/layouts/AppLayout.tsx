@@ -6,6 +6,7 @@ import {
   ContactMail as ApplicationIcon,
   AccountCircle as AccountIcon,
   MenuOpen as MenuIcon,
+  PowerSettingsNew as PowerSettingsIcon,
 } from '@mui/icons-material';
 import {
   AppBar,
@@ -21,11 +22,15 @@ import {
   ListItemText,
   SxProps,
   Toolbar,
+  Typography,
 } from '@mui/material';
 import { matchPath, useLocation, useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { BRICS_LOGO } from 'src/assets';
+import { Popover } from 'src/components/common';
 import { appRoutes } from 'src/constants';
+import { useAuth } from 'src/hooks';
 
 type MenuItem = {
   link: string;
@@ -35,8 +40,8 @@ type MenuItem = {
 
 const menuItems: MenuItem[] = [
   {
-    link: appRoutes.resumes.index,
-    title: 'Resumes',
+    link: appRoutes.specialists.index,
+    title: 'Specialists',
     icon: <ResumesIcon />,
   },
   {
@@ -52,8 +57,38 @@ const menuItems: MenuItem[] = [
 ];
 
 export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const { logout } = useAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const renderPopoverContent = React.useCallback(() => {
+    return (
+      <Box>
+        <List>
+          {/* <ListItem disablePadding>
+        <ListItemButton component={Link} to={accountRoute}>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="My account" />
+        </ListItemButton>
+      </ListItem> */}
+
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => logout()}>
+              <ListItemIcon>
+                <PowerSettingsIcon color="error" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color="error">Log out</Typography>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
+    );
+  }, [logout]);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(true);
 
@@ -104,9 +139,17 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 <MenuIcon />
               </IconButton>
 
-              <IconButton sx={{ alignSelf: 'flex-end' }}>
-                <AccountIcon fontSize="large" />
-              </IconButton>
+              <Popover
+                target={
+                  <IconButton sx={{ alignSelf: 'flex-end' }}>
+                    <AccountIcon fontSize="large" />
+                  </IconButton>
+                }
+                content={renderPopoverContent}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                elevation={4}
+              />
             </Grid>
           </Toolbar>
         </AppBar>

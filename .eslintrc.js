@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['plugin:@nrwl/nx/react', 'plugin:prettier/recommended', 'prettier'],
   root: true,
-  ignorePatterns: ['!**/*', 'schema.ts'],
+  ignorePatterns: ['!**/*', 'schema.d.ts'],
   plugins: ['@nrwl/nx'],
   overrides: [
     {

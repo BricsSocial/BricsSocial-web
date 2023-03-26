@@ -1,12 +1,21 @@
 import React from 'react';
 
-import { Route, Routes } from 'react-router';
+import {
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+  useMatch,
+  matchPath,
+  useLocation,
+} from 'react-router-dom';
 
+import { appRoutes } from 'src/constants';
+import { useAuth, useRoutes } from 'src/hooks';
 import { NotFoundPage } from 'src/pages';
 import { APP_ROUTES } from 'src/routes';
 import { RouteProps } from 'src/types';
 import { Nullable } from 'src/types';
-import { traverseRoutesTree } from 'src/utils';
 
 const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
   const renderRouteContent = (routeProps: Nullable<RouteProps>) => {
@@ -15,7 +24,6 @@ const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
     const { element, childRoutes, index, ...restProps } = routeProps;
 
     return (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       <Route index={index as any} key={routeProps.path || 'index'} element={element} {...restProps}>
         {!index && renderNestedRoutes(childRoutes)}
       </Route>
@@ -26,7 +34,13 @@ const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
 };
 
 export const AppRouter: React.FC = () => {
-  const routes = React.useMemo(() => traverseRoutesTree(APP_ROUTES), []);
+  const { isAuthenticated } = useAuth();
+  const routes = useRoutes(APP_ROUTES);
+
+  const location = useLocation();
+
+  if (!matchPath({ path: appRoutes.auth.index, end: false }, location.pathname) && !isAuthenticated)
+    return <Navigate to={appRoutes.auth.index} replace />;
 
   return (
     <Routes>

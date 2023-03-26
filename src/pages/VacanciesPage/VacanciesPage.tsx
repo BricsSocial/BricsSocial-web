@@ -53,13 +53,7 @@ export const VacanciesPage: React.FC = () => {
         <Button variant="outlined">Add new vacancy</Button>
       </Grid>
 
-      <DataGrid
-        rowSelection={false}
-        loading={loading}
-        autoHeight
-        rows={vacancies}
-        columns={columns}
-      />
+      <DataGrid loading={loading} autoHeight rows={vacancies} columns={columns} checkboxSelection />
     </Box>
   );
 };
