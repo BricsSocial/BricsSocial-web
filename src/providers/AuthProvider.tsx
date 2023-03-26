@@ -56,6 +56,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   };
 
   React.useEffect(() => {
+    // FIXME: Display full-size loading screen while getting this data
     if (isAuthenticated) {
       (async () => {
         try {

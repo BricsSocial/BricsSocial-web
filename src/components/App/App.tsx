@@ -2,16 +2,20 @@
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter } from 'react-router-dom';
 
-import { AuthProvider } from 'src/providers';
+import { AuthProvider, ModalsProvider } from 'src/providers';
 
 import { AppRouter } from '../AppRouter';
+import { VacancyRequestModal } from '../VacancyRequestModal';
 
 export function App() {
   return (
     <BrowserRouter>
       <SnackbarProvider>
         <AuthProvider>
-          <AppRouter />
+          <ModalsProvider>
+            <AppRouter />
+            <VacancyRequestModal />
+          </ModalsProvider>
         </AuthProvider>
       </SnackbarProvider>
     </BrowserRouter>
