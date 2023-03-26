@@ -4,12 +4,13 @@ import { AlternateEmail as RequestIcon } from '@mui/icons-material';
 import { Box, SxProps, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
+import { VacancyRequestModal, VacancyRequestModalArgs } from 'src/components';
 import { ModalId } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
 import { Specialist, SpecialistsService } from 'src/services';
 
-export const Specialists: React.FC = () => {
-  const { openModal } = useModal();
+export const SpecialistsPage: React.FC = () => {
+  const { openModal } = useModal<VacancyRequestModalArgs>();
   const { data, isLoading } = useRequest(SpecialistsService.getSpecialists);
 
   const columns: GridColDef<Specialist>[] = [
@@ -17,10 +18,10 @@ export const Specialists: React.FC = () => {
       field: 'actions',
       type: 'actions',
       width: 50,
-      getActions: (params: GridRowParams) => [
+      getActions: ({ row }: GridRowParams) => [
         <GridActionsCellItem
           icon={<RequestIcon />}
-          onClick={() => openModal(ModalId.VacancyRequestModal)}
+          onClick={() => openModal(ModalId.VacancyRequestModal, { specialist: row })}
           label="Send vacancy request"
           showInMenu
         />,
@@ -84,6 +85,8 @@ export const Specialists: React.FC = () => {
         rows={data?.items || []}
         columns={columns}
       />
+
+      <VacancyRequestModal />
     </Box>
   );
 };

@@ -2,7 +2,10 @@ import React from 'react';
 
 import { Nullable } from 'src/types';
 
-export const useRequest = <T, R>(requestFn: (...args: R[]) => Promise<T>, lazy = false) => {
+export const useRequest = <T, R>(
+  requestFn: (...args: R[]) => Promise<T> | Promise<T>,
+  lazy = false,
+) => {
   const [isLoading, setIsLoading] = React.useState(!lazy);
   const [data, setData] = React.useState<Nullable<T>>();
 
@@ -19,7 +22,9 @@ export const useRequest = <T, R>(requestFn: (...args: R[]) => Promise<T>, lazy =
   );
 
   React.useEffect(() => {
-    if (!lazy) makeRequest();
+    if (!lazy) {
+      makeRequest();
+    }
   }, [makeRequest, lazy]);
 
   return {

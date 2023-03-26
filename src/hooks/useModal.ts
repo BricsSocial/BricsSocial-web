@@ -7,8 +7,6 @@ export const useModal = <TArgs extends SimpleObject>(id?: ModalId) => {
   const { openModal, closeModal, state } = React.useContext(ModalsContext);
   const [isClosureAllowed, setIsClosureAllowed] = React.useState(true);
 
-  console.log(state);
-
   const modalState = React.useMemo((): ModalState<TArgs> => {
     return id ? { ...defaultModalState, ...state[id] } : defaultModalState;
   }, [id, state]);

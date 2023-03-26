@@ -7,4 +7,10 @@ export class SpecialistsService {
   public static getSpecialists = async () => {
     return (await (await axiosClient).SpecialistsGet()).data;
   };
+
+  public static createVacancyRequest = async (
+    input: Components.Schemas.CreateSpecialistReplyCommand,
+  ) => {
+    return (await axiosClient).SpecialistsCreateReply(null, input);
+  };
 }

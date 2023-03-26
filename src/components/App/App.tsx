@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider, ModalsProvider } from 'src/providers';
 
 import { AppRouter } from '../AppRouter';
-import { VacancyRequestModal } from '../VacancyRequestModal';
 
 export function App() {
   return (
@@ -14,7 +13,6 @@ export function App() {
         <AuthProvider>
           <ModalsProvider>
             <AppRouter />
-            <VacancyRequestModal />
           </ModalsProvider>
         </AuthProvider>
       </SnackbarProvider>
