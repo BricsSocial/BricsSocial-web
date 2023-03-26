@@ -4,9 +4,9 @@ import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { useRequest } from 'src/hooks';
-import { VacanciesService, VacanciesPaginatedList } from 'src/services';
+import { VacanciesService, Vacancy } from 'src/services';
 
-const columns: GridColDef[] = [
+const columns: GridColDef<Vacancy>[] = [
   {
     field: 'name',
     width: 200,

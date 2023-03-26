@@ -25,7 +25,7 @@ import {
   Typography,
 } from '@mui/material';
 import { matchPath, useLocation, useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { BRICS_LOGO } from 'src/assets';
 import { Popover } from 'src/components/common';
@@ -100,7 +100,7 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
         open={isMenuOpen}
         sx={{
           [`.${drawerClasses.paper}`]: {
-            transition: 'all 0.3s',
+            transition: 'all 0.25s ease-out',
             position: 'relative',
             width: `${isMenuOpen ? '300' : '60'}px`,
           },
@@ -131,7 +131,7 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
         </List>
       </Drawer>
 
-      <Box sx={appContainerStyles(true)}>
+      <Box sx={appContainerStyles(isMenuOpen)}>
         <AppBar position="relative" sx={{ width: '100%', background: '#FFF' }}>
           <Toolbar>
             <Grid container direction="row" alignItems="center" justifyContent="space-between">
@@ -161,15 +161,23 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
 const mainContainerStyles: SxProps = {
   display: 'flex',
-  width: '100%',
+  width: '100vw',
   height: '100vh',
+  overflow: 'hidden',
 };
 
 const appContainerStyles = (isDrawedOpened: boolean): SxProps => ({
-  width: '100%',
+  right: 0,
+  position: 'absolute',
+  transition: 'all 0.25s ease-out',
+  width: `calc(100% - ${isDrawedOpened ? '300px' : '60px'})`,
+  minWidth: 600,
 });
 
 const appContentWrapper: SxProps = {
+  height: 'calc(100vh - 64px)',
+  boxSizing: 'border-box',
   px: 6,
   py: 4,
+  overflowY: 'auto',
 };

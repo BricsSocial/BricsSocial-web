@@ -20,7 +20,7 @@ export const useRequest = <T, R>(requestFn: (...args: R[]) => Promise<T>, lazy =
 
   React.useEffect(() => {
     if (!lazy) makeRequest();
-  }, [lazy]);
+  }, [makeRequest, lazy]);
 
   return {
     data,
