@@ -10,4 +10,8 @@ export class VacanciesService {
   ): Promise<VacanciesPaginatedList> => {
     return (await (await axiosClient).VacanciesGet(params)).data;
   };
+
+  public static createVacancy = async (data: Paths.VacanciesCreate.RequestBody) => {
+    return (await axiosClient).VacanciesCreate(null, data);
+  };
 }

@@ -3,7 +3,9 @@ import React from 'react';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
-import { useRequest } from 'src/hooks';
+import { CreateVacancyModal } from 'src/components';
+import { ModalId } from 'src/constants';
+import { useModal, useRequest } from 'src/hooks';
 import { VacanciesService, Vacancy } from 'src/services';
 
 const columns: GridColDef<Vacancy>[] = [
@@ -36,13 +38,20 @@ const columns: GridColDef<Vacancy>[] = [
 ];
 
 export const VacanciesPage: React.FC = () => {
-  const { data, isLoading } = useRequest(VacanciesService.getVacancies);
+  const { openModal, closeModal } = useModal(ModalId.CreateVacancyModal);
+  const {
+    data,
+    isLoading,
+    makeRequest: refetchVacancies,
+  } = useRequest(VacanciesService.getVacancies);
 
   return (
     <Box>
       <Grid container mb={4} direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="h4">Vacancies</Typography>
-        <Button variant="outlined">Add new vacancy</Button>
+        <Button variant="outlined" onClick={() => openModal()}>
+          Add new vacancy
+        </Button>
       </Grid>
 
       <DataGrid
@@ -52,6 +61,8 @@ export const VacanciesPage: React.FC = () => {
         columns={columns}
         checkboxSelection
       />
+
+      <CreateVacancyModal afterSubmit={() => refetchVacancies()} />
     </Box>
   );
 };
