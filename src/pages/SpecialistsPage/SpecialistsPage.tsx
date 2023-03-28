@@ -1,28 +1,43 @@
 import React from 'react';
 
-import { AlternateEmail as RequestIcon } from '@mui/icons-material';
+import { AlternateEmail as RequestIcon, AccountBox as ProfileIcon } from '@mui/icons-material';
 import { Box, SxProps, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { generatePath, useNavigate } from 'react-router';
 
 import { VacancyRequestModal, VacancyRequestModalArgs } from 'src/components';
-import { ModalId } from 'src/constants';
+import { appRoutes, ModalId, RouterPathParam } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
 import { Specialist, SpecialistsService } from 'src/services';
 
 export const SpecialistsPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const { openModal } = useModal<VacancyRequestModalArgs>();
-  const { data, isLoading } = useRequest(SpecialistsService.getSpecialists);
+  const { data, isLoading } = useRequest(SpecialistsService.getSpecialistsList);
 
   const columns: GridColDef<Specialist>[] = [
     {
       field: 'actions',
       type: 'actions',
       width: 50,
-      getActions: ({ row }: GridRowParams) => [
+      getActions: ({ row }) => [
         <GridActionsCellItem
           icon={<RequestIcon />}
           onClick={() => openModal(ModalId.VacancyRequestModal, { specialist: row })}
           label="Send vacancy request"
+          showInMenu
+        />,
+        <GridActionsCellItem
+          icon={<ProfileIcon />}
+          onClick={() =>
+            navigate(
+              generatePath(appRoutes.specialists.profile, {
+                [RouterPathParam.specialistId]: row.id,
+              }),
+            )
+          }
+          label="View Profile"
           showInMenu
         />,
       ],

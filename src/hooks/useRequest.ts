@@ -5,6 +5,7 @@ import { Nullable } from 'src/types';
 export const useRequest = <T, R>(
   requestFn: (...args: R[]) => Promise<T> | Promise<T>,
   lazy = false,
+  ...requestArgs: R[]
 ) => {
   const [isLoading, setIsLoading] = React.useState(!lazy);
   const [data, setData] = React.useState<Nullable<T>>();
@@ -24,7 +25,7 @@ export const useRequest = <T, R>(
 
   React.useEffect(() => {
     if (!lazy) {
-      makeRequest();
+      makeRequest(...requestArgs);
     }
   }, [makeRequest, lazy]);
 

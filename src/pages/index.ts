@@ -4,3 +4,4 @@ export * from './SignUpPage';
 export * from './SpecialistsPage';
 export * from './VacanciesPage';
 export * from './ApplicationsPage';
+export * from './SpecialistProfilePage';

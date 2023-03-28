@@ -4,3 +4,7 @@ export enum RouteAccessType {
   agent = 'agent',
   admin = 'admin',
 }
+
+export enum RouterPathParam {
+  specialistId = 'specialistId',
+}

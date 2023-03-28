@@ -39,7 +39,7 @@ const columns: GridColDef<Vacancy>[] = [
 ];
 
 export const VacanciesPage: React.FC = () => {
-  const apiRef = useGridApiRef();
+  const apiRef = useGridApiRef<any>();
   const { openModal } = useModal(ModalId.CreateVacancyModal);
   const {
     data,
@@ -73,6 +73,7 @@ export const VacanciesPage: React.FC = () => {
             variant="outlined"
             color="error"
             onClick={async () => {
+              // TODO: Open a 'Are you sure?' modal
               await deleteVacancy({ id: Array.from<any>(selectedRows?.values() || [])?.[0]?.id });
               await refetchVacancies();
             }}

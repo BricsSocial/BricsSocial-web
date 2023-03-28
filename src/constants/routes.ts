@@ -1,3 +1,5 @@
+import { RouterPathParam } from './router';
+
 export const home = {
   index: '/',
 };
@@ -10,6 +12,7 @@ export const auth = {
 
 export const specialists = {
   index: '/specialists',
+  profile: `specialists/:${RouterPathParam.specialistId}`,
 };
 
 export const vacancies = {
