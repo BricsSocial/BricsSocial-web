@@ -6,7 +6,10 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "generate-typings": "npx openapi-client-axios-typegen swagger.json > src/schema.d.ts"
+    "typecheck": "tsc --noEmit",
+    "transpile": "tsc -p ./tsconfig.app.json --outDir dist",
+    "generate-typings": "npx openapi-client-axios-typegen swagger.json > src/schema.d.ts",
+    "generate-circular-graph": "yarn transpile && madge --circular dist --image graph.svg"
   },
   "private": true,
   "dependencies": {

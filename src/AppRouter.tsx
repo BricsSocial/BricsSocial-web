@@ -3,8 +3,9 @@ import React from 'react';
 import { Route, Routes, Navigate, matchPath, useLocation } from 'react-router-dom';
 
 import { appRoutes } from 'src/constants';
-import { useAuth, useRoutes } from 'src/hooks';
-import { NotFoundPage } from 'src/pages';
+import { useAuth } from 'src/hooks';
+import { useRoutes } from 'src/hooks/useRoutes';
+// import { NotFoundPage } from 'src/pages';
 import { APP_ROUTES } from 'src/routes';
 import { RouteProps } from 'src/types';
 import { Nullable } from 'src/types';
@@ -25,7 +26,7 @@ const renderNestedRoutes = (routesProps: RouteProps[] = []) => {
   return routesProps.map(renderRouteContent);
 };
 
-export const AppRouter: React.FC = () => {
+export const AppRouter: React.FC = React.memo(() => {
   const { isAuthenticated } = useAuth();
   const routes = useRoutes(APP_ROUTES);
 
@@ -38,7 +39,7 @@ export const AppRouter: React.FC = () => {
     <Routes>
       {renderNestedRoutes(routes)}
 
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<h2>Not found</h2>} />
     </Routes>
   );
-};
+});

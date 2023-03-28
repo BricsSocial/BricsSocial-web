@@ -14,4 +14,8 @@ export class VacanciesService {
   public static createVacancy = async (data: Paths.VacanciesCreate.RequestBody) => {
     return (await axiosClient).VacanciesCreate(null, data);
   };
+
+  public static deleteVacancies = async (pathParams: Paths.VacanciesDelete.PathParameters) => {
+    return (await axiosClient).VacanciesDelete(pathParams);
+  };
 }

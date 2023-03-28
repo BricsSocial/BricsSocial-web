@@ -37,7 +37,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const signIn: AuthContextType['signIn'] = async loginData => {
     try {
       const { data } = await AuthService.login(loginData);
-      console.log('test');
       localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, data?.token || '');
       setIsAuthenticated(true);
       return true;
