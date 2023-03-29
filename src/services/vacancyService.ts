@@ -3,6 +3,7 @@ import { Components, Paths } from 'src/schema';
 
 export type VacanciesPaginatedList = Components.Schemas.PaginatedListVacancyDto;
 export type Vacancy = Components.Schemas.VacancyDto;
+export type VacancyReply = Components.Schemas.ReplyDto;
 
 export class VacanciesService {
   public static getVacancies = async (
@@ -17,5 +18,16 @@ export class VacanciesService {
 
   public static deleteVacancies = async (pathParams: Paths.VacanciesDelete.PathParameters) => {
     return (await axiosClient).VacanciesDelete(pathParams);
+  };
+
+  public static getReplies = async (params?: Paths.VacanciesGetReplies.QueryParameters) => {
+    return (await (await axiosClient).VacanciesGetReplies(params)).data;
+  };
+
+  public static updateReply = async (
+    params?: Paths.VacanciesUpdateReply.PathParameters,
+    data?: Paths.VacanciesUpdateReply.RequestBody,
+  ) => {
+    return (await axiosClient).VacanciesUpdateReply(params, data);
   };
 }

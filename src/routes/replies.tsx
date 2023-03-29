@@ -2,18 +2,18 @@ import { Outlet } from 'react-router';
 
 import { appRoutes } from 'src/constants';
 import { AppLayout } from 'src/layouts';
-import { ApplicationsPage } from 'src/pages';
+import { RepliesPage } from 'src/pages';
 import { RouteProps } from 'src/types';
 
 export const ROUTES: RouteProps[] = [
   {
     index: true,
-    element: <ApplicationsPage />,
+    element: <RepliesPage />,
   },
 ];
 
-export const APPLICATIONS_ROUTE: RouteProps = {
-  path: appRoutes.applications.index,
+export const REPLIES_ROUTE: RouteProps = {
+  path: appRoutes.replies.index,
   element: (
     <AppLayout>
       <Outlet />

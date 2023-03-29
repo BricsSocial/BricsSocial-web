@@ -16,76 +16,79 @@ export const SpecialistsPage: React.FC = () => {
   const { openModal } = useModal<VacancyRequestModalArgs>();
   const { data, isLoading } = useRequest(SpecialistsService.getSpecialistsList);
 
-  const columns: GridColDef<Specialist>[] = [
-    {
-      field: 'actions',
-      type: 'actions',
-      width: 50,
-      getActions: ({ row }) => [
-        <GridActionsCellItem
-          icon={<RequestIcon />}
-          onClick={() => openModal(ModalId.VacancyRequestModal, { specialist: row })}
-          label="Send vacancy request"
-          showInMenu
-        />,
-        <GridActionsCellItem
-          icon={<ProfileIcon />}
-          onClick={() =>
-            navigate(
-              generatePath(appRoutes.specialists.profile, {
-                [RouterPathParam.specialistId]: row.id,
-              }),
-            )
-          }
-          label="View Profile"
-          showInMenu
-        />,
-      ],
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full Name',
-      flex: 1,
-      minWidth: 200,
-      valueGetter: ({ row }) => `${row.firstName} ${row.lastName}`,
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: 'about',
-      headerName: 'About',
-      flex: 1,
-      minWidth: 200,
-      renderCell: ({ row }) => {
-        return (
-          <Tooltip title={row.about}>
-            <Typography sx={tableCellStyles} variant="body2">
-              {row.about}
-            </Typography>
-          </Tooltip>
-        );
+  const columns: GridColDef<Specialist>[] = React.useMemo(
+    () => [
+      {
+        field: 'actions',
+        type: 'actions',
+        width: 50,
+        getActions: ({ row }) => [
+          <GridActionsCellItem
+            icon={<RequestIcon />}
+            onClick={() => openModal(ModalId.VacancyRequestModal, { specialist: row })}
+            label="Send vacancy request"
+            showInMenu
+          />,
+          <GridActionsCellItem
+            icon={<ProfileIcon />}
+            onClick={() =>
+              navigate(
+                generatePath(appRoutes.specialists.profile, {
+                  [RouterPathParam.specialistId]: row.id,
+                }),
+              )
+            }
+            label="View Profile"
+            showInMenu
+          />,
+        ],
       },
-    },
-    {
-      field: 'bio',
-      headerName: 'Bio',
-      flex: 1,
-      minWidth: 200,
-      renderCell: ({ row }) => {
-        return (
-          <Tooltip title={row.bio}>
-            <Typography sx={tableCellStyles} variant="body2">
-              {row.bio}
-            </Typography>
-          </Tooltip>
-        );
+      {
+        field: 'fullName',
+        headerName: 'Full Name',
+        flex: 1,
+        minWidth: 200,
+        valueGetter: ({ row }) => `${row.firstName} ${row.lastName}`,
       },
-    },
-  ];
+      {
+        field: 'email',
+        headerName: 'Email',
+        flex: 1,
+        minWidth: 200,
+      },
+      {
+        field: 'about',
+        headerName: 'About',
+        flex: 1,
+        minWidth: 200,
+        renderCell: ({ row }) => {
+          return (
+            <Tooltip title={row.about}>
+              <Typography sx={tableCellStyles} variant="body2">
+                {row.about}
+              </Typography>
+            </Tooltip>
+          );
+        },
+      },
+      {
+        field: 'bio',
+        headerName: 'Bio',
+        flex: 1,
+        minWidth: 200,
+        renderCell: ({ row }) => {
+          return (
+            <Tooltip title={row.bio}>
+              <Typography sx={tableCellStyles} variant="body2">
+                {row.bio}
+              </Typography>
+            </Tooltip>
+          );
+        },
+      },
+    ],
+    [navigate, openModal],
+  );
 
   return (
     <Box>

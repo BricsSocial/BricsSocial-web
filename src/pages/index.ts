@@ -3,5 +3,5 @@ export * from './SignInPage';
 export * from './SignUpPage';
 export * from './SpecialistsPage';
 export * from './VacanciesPage';
-export * from './ApplicationsPage';
+export * from './RepliesPage';
 export * from './SpecialistProfilePage';

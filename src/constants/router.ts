@@ -7,4 +7,5 @@ export enum RouteAccessType {
 
 export enum RouterPathParam {
   specialistId = 'specialistId',
+  vacancyId = 'vacancyId',
 }

@@ -66,6 +66,9 @@ declare namespace Components {
             email?: string | null;
             role?: string | null;
         }
+        export interface FileUploadResponse {
+            fileUrl?: string | null;
+        }
         export interface GetSpecialistRepliesQuery {
             pageNumber?: number; // int32
             pageSize?: number; // int32
@@ -149,6 +152,7 @@ declare namespace Components {
             instance?: string | null;
         }
         export interface ReplyDto {
+            id?: number; // int32
             agentId?: null | number; // int32
             agent?: AgentDto;
             specialistId?: null | number; // int32
@@ -263,6 +267,24 @@ declare namespace Paths {
             }
         }
     }
+    namespace AgentsDeletePhoto {
+        namespace Parameters {
+            export type Id = number; // int32
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* int32 */;
+        }
+        namespace Responses {
+            export interface $200 {
+            }
+            export type $400 = Components.Schemas.ProblemDetails;
+            export type $401 = Components.Schemas.ProblemDetails;
+            export type $403 = Components.Schemas.ProblemDetails;
+            export type $404 = Components.Schemas.ProblemDetails;
+            export interface $500 {
+            }
+        }
+    }
     namespace AgentsGet {
         namespace Parameters {
             export type CompanyId = number; // int32
@@ -315,6 +337,26 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.UpdateAgentCommand;
         namespace Responses {
             export type $200 = Components.Schemas.AgentDto;
+            export type $400 = Components.Schemas.ProblemDetails;
+            export type $401 = Components.Schemas.ProblemDetails;
+            export type $403 = Components.Schemas.ProblemDetails;
+            export type $404 = Components.Schemas.ProblemDetails;
+            export interface $500 {
+            }
+        }
+    }
+    namespace AgentsUpdatePhoto {
+        namespace Parameters {
+            export type Id = number; // int32
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* int32 */;
+        }
+        export interface RequestBody {
+            file?: string; // binary
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.FileUploadResponse;
             export type $400 = Components.Schemas.ProblemDetails;
             export type $401 = Components.Schemas.ProblemDetails;
             export type $403 = Components.Schemas.ProblemDetails;
@@ -422,6 +464,26 @@ declare namespace Paths {
             }
         }
     }
+    namespace CompaniesUpdateLogo {
+        namespace Parameters {
+            export type Id = number; // int32
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* int32 */;
+        }
+        export interface RequestBody {
+            file?: string; // binary
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.FileUploadResponse;
+            export type $400 = Components.Schemas.ProblemDetails;
+            export type $401 = Components.Schemas.ProblemDetails;
+            export type $403 = Components.Schemas.ProblemDetails;
+            export type $404 = Components.Schemas.ProblemDetails;
+            export interface $500 {
+            }
+        }
+    }
     namespace CountriesGet {
         namespace Responses {
             export type $200 = Components.Schemas.CountryDto[];
@@ -458,6 +520,24 @@ declare namespace Paths {
         }
         namespace Responses {
             export interface $204 {
+            }
+            export type $400 = Components.Schemas.ProblemDetails;
+            export type $401 = Components.Schemas.ProblemDetails;
+            export type $403 = Components.Schemas.ProblemDetails;
+            export type $404 = Components.Schemas.ProblemDetails;
+            export interface $500 {
+            }
+        }
+    }
+    namespace SpecialistsDeletePhoto {
+        namespace Parameters {
+            export type Id = number; // int32
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* int32 */;
+        }
+        namespace Responses {
+            export interface $200 {
             }
             export type $400 = Components.Schemas.ProblemDetails;
             export type $401 = Components.Schemas.ProblemDetails;
@@ -547,6 +627,26 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.UpdateSpecialistCommand;
         namespace Responses {
             export type $200 = Components.Schemas.SpecialistDto;
+            export type $400 = Components.Schemas.ProblemDetails;
+            export type $401 = Components.Schemas.ProblemDetails;
+            export type $403 = Components.Schemas.ProblemDetails;
+            export type $404 = Components.Schemas.ProblemDetails;
+            export interface $500 {
+            }
+        }
+    }
+    namespace SpecialistsUpdatePhoto {
+        namespace Parameters {
+            export type Id = number; // int32
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* int32 */;
+        }
+        export interface RequestBody {
+            file?: string; // binary
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.FileUploadResponse;
             export type $400 = Components.Schemas.ProblemDetails;
             export type $401 = Components.Schemas.ProblemDetails;
             export type $403 = Components.Schemas.ProblemDetails;
@@ -764,6 +864,22 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.AgentsGetCurrent.Responses.$200>
   /**
+   * AgentsUpdatePhoto -  (Auth roles: Agent)
+   */
+  'AgentsUpdatePhoto'(
+    parameters?: Parameters<Paths.AgentsUpdatePhoto.PathParameters> | null,
+    data?: Paths.AgentsUpdatePhoto.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.AgentsUpdatePhoto.Responses.$200>
+  /**
+   * AgentsDeletePhoto -  (Auth roles: Agent)
+   */
+  'AgentsDeletePhoto'(
+    parameters?: Parameters<Paths.AgentsDeletePhoto.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.AgentsDeletePhoto.Responses.$200>
+  /**
    * AuthLogin
    */
   'AuthLogin'(
@@ -820,6 +936,14 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.CompaniesDelete.Responses.$204>
   /**
+   * CompaniesUpdateLogo -  (Auth roles: Agent)
+   */
+  'CompaniesUpdateLogo'(
+    parameters?: Parameters<Paths.CompaniesUpdateLogo.PathParameters> | null,
+    data?: Paths.CompaniesUpdateLogo.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.CompaniesUpdateLogo.Responses.$200>
+  /**
    * CountriesGet
    */
   'CountriesGet'(
@@ -875,6 +999,22 @@ export interface OperationMethods {
     data?: any,
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.SpecialistsGetCurrent.Responses.$200>
+  /**
+   * SpecialistsUpdatePhoto -  (Auth roles: Specialist)
+   */
+  'SpecialistsUpdatePhoto'(
+    parameters?: Parameters<Paths.SpecialistsUpdatePhoto.PathParameters> | null,
+    data?: Paths.SpecialistsUpdatePhoto.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.SpecialistsUpdatePhoto.Responses.$200>
+  /**
+   * SpecialistsDeletePhoto -  (Auth roles: Specialist)
+   */
+  'SpecialistsDeletePhoto'(
+    parameters?: Parameters<Paths.SpecialistsDeletePhoto.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.SpecialistsDeletePhoto.Responses.$200>
   /**
    * SpecialistsGetReplies -  (Auth roles: Specialist)
    */
@@ -1020,6 +1160,24 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.AgentsGetCurrent.Responses.$200>
   }
+  ['/api/agents/{id}/photo']: {
+    /**
+     * AgentsUpdatePhoto -  (Auth roles: Agent)
+     */
+    'put'(
+      parameters?: Parameters<Paths.AgentsUpdatePhoto.PathParameters> | null,
+      data?: Paths.AgentsUpdatePhoto.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.AgentsUpdatePhoto.Responses.$200>
+    /**
+     * AgentsDeletePhoto -  (Auth roles: Agent)
+     */
+    'delete'(
+      parameters?: Parameters<Paths.AgentsDeletePhoto.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.AgentsDeletePhoto.Responses.$200>
+  }
   ['/api/auth/login']: {
     /**
      * AuthLogin
@@ -1084,6 +1242,16 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.CompaniesDelete.Responses.$204>
   }
+  ['/api/companies/{id}/logo']: {
+    /**
+     * CompaniesUpdateLogo -  (Auth roles: Agent)
+     */
+    'put'(
+      parameters?: Parameters<Paths.CompaniesUpdateLogo.PathParameters> | null,
+      data?: Paths.CompaniesUpdateLogo.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.CompaniesUpdateLogo.Responses.$200>
+  }
   ['/api/countries']: {
     /**
      * CountriesGet
@@ -1147,6 +1315,24 @@ export interface PathsDictionary {
       data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.SpecialistsGetCurrent.Responses.$200>
+  }
+  ['/api/specialists/{id}/photo']: {
+    /**
+     * SpecialistsUpdatePhoto -  (Auth roles: Specialist)
+     */
+    'put'(
+      parameters?: Parameters<Paths.SpecialistsUpdatePhoto.PathParameters> | null,
+      data?: Paths.SpecialistsUpdatePhoto.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.SpecialistsUpdatePhoto.Responses.$200>
+    /**
+     * SpecialistsDeletePhoto -  (Auth roles: Specialist)
+     */
+    'delete'(
+      parameters?: Parameters<Paths.SpecialistsDeletePhoto.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.SpecialistsDeletePhoto.Responses.$200>
   }
   ['/api/specialists/replies']: {
     /**
