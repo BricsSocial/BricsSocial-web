@@ -2,7 +2,7 @@ import OpenAPIClientAxios from 'openapi-client-axios';
 
 import { Client } from 'src/schema';
 
-export const BASE_API_URL = 'http://51.250.86.18';
+export const BASE_API_URL = 'http://158.160.37.250';
 export const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'accessToken';
 
 export enum UserRole {
@@ -14,7 +14,7 @@ const api = new OpenAPIClientAxios({
   axiosConfigDefaults: {
     baseURL: BASE_API_URL,
   },
-  definition: 'http://51.250.86.18/swagger/v1/swagger.json',
+  definition: 'http://158.160.37.250/swagger/v1/swagger.json',
 });
 api.init();
 

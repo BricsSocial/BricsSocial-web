@@ -7,7 +7,7 @@ export type VacancyReply = Components.Schemas.ReplyDto;
 
 export class VacanciesService {
   public static getVacancies = async (
-    params: Paths.VacanciesGet.QueryParameters,
+    params?: Paths.VacanciesGet.QueryParameters,
   ): Promise<VacanciesPaginatedList> => {
     return (await (await axiosClient).VacanciesGet(params)).data;
   };
