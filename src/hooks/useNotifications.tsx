@@ -18,9 +18,6 @@ export const useNotifications = () => {
             <CloseIcon />
           </IconButton>
         ),
-        style: {
-          fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-        },
       });
     },
     [enqueueSnackbar, closeSnackbar],

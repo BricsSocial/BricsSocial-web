@@ -1,45 +1,20 @@
 import React from 'react';
 
+import { Info as InfoIcon } from '@mui/icons-material';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridColDef, useGridApiRef } from '@mui/x-data-grid';
+import { generatePath, useNavigate } from 'react-router';
 
 import { CreateVacancyModal } from 'src/components';
-import { ModalId } from 'src/constants';
+import { appRoutes, ModalId, RouterPathParam } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
 import { VacanciesService, Vacancy } from 'src/services';
 import { Nullable } from 'src/types';
 
-const columns: GridColDef<Vacancy>[] = [
-  {
-    field: 'name',
-    width: 200,
-    headerName: 'Name',
-  },
-  {
-    field: 'status',
-    width: 100,
-    headerName: 'Status',
-    renderCell: params => {
-      return (
-        <Chip
-          variant="outlined"
-          {...(params.row.status === 1
-            ? {
-                label: 'Open',
-                color: 'success',
-              }
-            : {
-                label: 'Closed',
-                color: 'error',
-              })}
-        />
-      );
-    },
-  },
-];
-
 export const VacanciesPage: React.FC = () => {
-  const apiRef = useGridApiRef<any>();
+  const apiRef = useGridApiRef();
+  const navigate = useNavigate();
+
   const { openModal } = useModal(ModalId.CreateVacancyModal);
   const {
     data,
@@ -56,6 +31,56 @@ export const VacanciesPage: React.FC = () => {
     React.useState<Nullable<ReturnType<(typeof apiRef)['current']['getSelectedRows']>>>();
 
   const onSelectedRowsChange = () => setSelectedRows(apiRef.current?.getSelectedRows?.());
+
+  const columns: GridColDef<Vacancy>[] = React.useMemo(
+    () => [
+      {
+        field: 'actions',
+        type: 'actions',
+        width: 50,
+        getActions: ({ row }) => [
+          <GridActionsCellItem
+            icon={<InfoIcon />}
+            onClick={() =>
+              navigate(
+                generatePath(appRoutes.vacancies.profile, {
+                  [RouterPathParam.vacancyId]: row.id,
+                }),
+              )
+            }
+            label="View Profile"
+            showInMenu
+          />,
+        ],
+      },
+      {
+        field: 'name',
+        width: 200,
+        headerName: 'Name',
+      },
+      {
+        field: 'status',
+        width: 100,
+        headerName: 'Status',
+        renderCell: params => {
+          return (
+            <Chip
+              {...(params.row.status === 1
+                ? {
+                    label: 'Open',
+                    color: 'success',
+                  }
+                : {
+                    label: 'Closed',
+                    color: 'error',
+                  })}
+            />
+          );
+        },
+      },
+    ],
+    [],
+  );
 
   return (
     <Box>

@@ -75,9 +75,9 @@ export const RepliesPage: React.FC = () => {
         renderCell: ({ row }) => {
           switch (row.type) {
             case 0:
-              return <Chip variant="outlined" color="secondary" label="Outgoing" />;
+              return <Chip variant="outlined" label="Outgoing" />;
             default:
-              return <Chip variant="outlined" color="primary" label="Incoming" />;
+              return <Chip variant="outlined" color="info" label="Incoming" />;
           }
         },
       },

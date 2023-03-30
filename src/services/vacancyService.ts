@@ -12,6 +12,10 @@ export class VacanciesService {
     return (await (await axiosClient).VacanciesGet(params)).data;
   };
 
+  public static getVacancy = async (id: number) => {
+    return (await (await axiosClient).VacanciesGetById({ id })).data;
+  };
+
   public static createVacancy = async (data: Paths.VacanciesCreate.RequestBody) => {
     return (await axiosClient).VacanciesCreate(null, data);
   };

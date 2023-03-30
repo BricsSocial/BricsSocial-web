@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { AlternateEmail as RequestIcon, AccountBox as ProfileIcon } from '@mui/icons-material';
-import { Box, SxProps, Tooltip, Typography } from '@mui/material';
-import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { Box, Link, SxProps, Tooltip, Typography } from '@mui/material';
+import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
 import { generatePath, useNavigate } from 'react-router';
 
 import { VacancyRequestModal, VacancyRequestModalArgs } from 'src/components';
@@ -55,6 +55,7 @@ export const SpecialistsPage: React.FC = () => {
         headerName: 'Email',
         flex: 1,
         minWidth: 200,
+        renderCell: ({ row }) => <Link href={`mailto:${row?.email}`}>{row?.email}</Link>,
       },
       {
         field: 'about',

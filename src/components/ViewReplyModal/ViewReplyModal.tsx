@@ -60,7 +60,6 @@ export const ViewReplyModal: React.FC<ViewReplyModalProps> = ({ onAfterClose }) 
         >
           <Typography variant="h6">Specialist</Typography>
           <Link
-            sx={{ fontFamily: '"Roboto"' }}
             href={generatePath(appRoutes.specialists.profile, {
               [RouterPathParam.specialistId]: reply?.specialist?.id,
             })}
@@ -97,7 +96,6 @@ export const ViewReplyModal: React.FC<ViewReplyModalProps> = ({ onAfterClose }) 
         >
           <Typography variant="h6">Vacancy</Typography>
           <Link
-            sx={{ fontFamily: '"Roboto"' }}
             href={generatePath(appRoutes.vacancies.profile, {
               [RouterPathParam.vacancyId]: reply?.vacancy?.id,
             })}
