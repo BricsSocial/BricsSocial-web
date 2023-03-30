@@ -3,7 +3,7 @@ import React from 'react';
 import {
   AssignmentInd as ResumesIcon,
   Ballot as VacanciesIcon,
-  ContactMail as ApplicationIcon,
+  ContactMail as RepliesIcon,
   AccountCircle as AccountIcon,
   MenuOpen as MenuIcon,
   PowerSettingsNew as PowerSettingsIcon,
@@ -50,9 +50,9 @@ const menuItems: MenuItem[] = [
     icon: <VacanciesIcon />,
   },
   {
-    link: appRoutes.applications.index,
-    title: 'Applications',
-    icon: <ApplicationIcon />,
+    link: appRoutes.replies.index,
+    title: 'Replies',
+    icon: <RepliesIcon />,
   },
 ];
 
