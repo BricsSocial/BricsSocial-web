@@ -12,7 +12,7 @@ export const useModal = <TArgs extends SimpleObject>(id?: ModalId) => {
   }, [id, state]);
 
   const openCurrentModal = React.useCallback(
-    (customId?: ModalId, customArgs?: ModalArgs<TArgs>) => {
+    <T extends SimpleObject = TArgs>(customId?: ModalId, customArgs?: ModalArgs<TArgs | T>) => {
       if (customId) {
         openModal(customId, customArgs);
       } else if (id) {

@@ -34,7 +34,7 @@ export const SignInPage: React.FC = () => {
 
   const onSubmit = async (data: SignInFormData) => {
     if (await signIn(data)) {
-      navigate(appRoutes.home.index);
+      navigate(appRoutes.app.index);
     }
   };
 
@@ -63,12 +63,6 @@ export const SignInPage: React.FC = () => {
         <Button variant="contained" type="submit" disabled={isLoading}>
           Sign in
         </Button>
-        <Typography variant="body1" textAlign="center">
-          Don't have an account yet?{' '}
-          <Link component={RouterLink} to={appRoutes.auth.signup}>
-            Sign Up
-          </Link>
-        </Typography>
       </Grid>
     </form>
   );

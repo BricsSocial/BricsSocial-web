@@ -99,10 +99,12 @@ export const VacancyRequestModal: React.FC = () => {
           />
         )}
         <Grid container mt={2} justifyContent="center" gap={4}>
-          <Button variant="outlined" disabled={creatingRequest}>
-            Cancel
-          </Button>
-          <Button variant="contained" type="submit" disabled={loadingVacancies || creatingRequest}>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={loadingVacancies || creatingRequest}
+          >
             Submit
           </Button>
         </Grid>

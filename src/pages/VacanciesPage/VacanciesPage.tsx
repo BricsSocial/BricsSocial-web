@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Info as InfoIcon } from '@mui/icons-material';
+import { Info as InfoIcon, Edit as EditIcon } from '@mui/icons-material';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import { generatePath, useNavigate } from 'react-router';
 
-import { CreateVacancyModal } from 'src/components';
+import { CreateVacancyModal, EditVacancyModal, EditVacancyModalArgs } from 'src/components';
 import { appRoutes, ModalId, RouterPathParam } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
 import { VacanciesService, Vacancy } from 'src/services';
@@ -15,7 +15,7 @@ export const VacanciesPage: React.FC = () => {
   const apiRef = useGridApiRef();
   const navigate = useNavigate();
 
-  const { openModal } = useModal(ModalId.CreateVacancyModal);
+  const { openModal } = useModal();
   const {
     data,
     isLoading,
@@ -51,6 +51,14 @@ export const VacanciesPage: React.FC = () => {
             label="View Profile"
             showInMenu
           />,
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            onClick={() =>
+              openModal<EditVacancyModalArgs>(ModalId.EditVacancyModal, { vacancy: row })
+            }
+            label="Edit"
+            showInMenu
+          />,
         ],
       },
       {
@@ -78,8 +86,19 @@ export const VacanciesPage: React.FC = () => {
           );
         },
       },
+      {
+        field: 'skillTags',
+        headerName: 'Skill Tags',
+        minWidth: 500,
+        flex: 1,
+        renderCell: ({ row }) => {
+          return row.skillTags
+            ?.split(',')
+            .map(tag => <Chip key={tag} label={tag} sx={{ mr: 1 }} />);
+        },
+      },
     ],
-    [],
+    [navigate, openModal],
   );
 
   return (
@@ -106,7 +125,7 @@ export const VacanciesPage: React.FC = () => {
           >
             Delete selected
           </Button>
-          <Button variant="contained" onClick={() => openModal()}>
+          <Button variant="contained" onClick={() => openModal(ModalId.CreateVacancyModal)}>
             Add new vacancy
           </Button>
         </Grid>
@@ -123,6 +142,7 @@ export const VacanciesPage: React.FC = () => {
       />
 
       <CreateVacancyModal afterSubmit={() => refetchVacancies()} />
+      <EditVacancyModal afterSubmit={() => refetchVacancies()} />
     </Box>
   );
 };

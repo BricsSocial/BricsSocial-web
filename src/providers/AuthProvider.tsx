@@ -3,15 +3,15 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 
 import { appRoutes } from 'src/constants';
-import { ACCESS_TOKEN_LOCAL_STORAGE_KEY, UserRole } from 'src/constants/api';
+import { ACCESS_TOKEN_LOCAL_STORAGE_KEY } from 'src/constants/api';
 import { useNotifications } from 'src/hooks';
 import { Paths } from 'src/schema';
-import { AuthService } from 'src/services/authService';
+import { AuthService, CurrentUser } from 'src/services/authService';
 import { Nullable } from 'src/types';
 
 export interface AuthContextType {
   isAuthenticated: boolean;
-  userRole: Nullable<UserRole>;
+  currentUser: Nullable<CurrentUser>;
   signIn: (loginData: Paths.AuthLogin.RequestBody) => Promise<boolean>;
   logout: () => void;
   // signUp: (data: components['schemas']['CreateAgentCommand']) => void;
@@ -19,7 +19,7 @@ export interface AuthContextType {
 
 export const AuthContext = React.createContext<AuthContextType>({
   isAuthenticated: false,
-  userRole: null,
+  currentUser: null,
   signIn: async () => false,
   logout: () => null,
   // signUp: () => null,
@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const [isAuthenticated, setIsAuthenticated] = React.useState(
     !!localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY),
   );
-  const [userRole, setUserRole] = React.useState<Nullable<UserRole>>();
+  const [currentUser, setCurrentUser] = React.useState<Nullable<CurrentUser>>();
 
   const signIn: AuthContextType['signIn'] = async loginData => {
     try {
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const logout: AuthContextType['logout'] = () => {
     localStorage.removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
     setIsAuthenticated(false);
-    setUserRole(null);
+    setCurrentUser(null);
     navigate(appRoutes.auth.index);
   };
 
@@ -59,8 +59,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     if (isAuthenticated) {
       (async () => {
         try {
-          const { data } = await AuthService.getCurrentAuthData();
-          setUserRole(data.role as UserRole);
+          console.log(localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY));
+          setCurrentUser(await AuthService.getCurrentAuthData());
         } catch (error: any) {
           logout();
           spawnNotification(error.message, 'error');
@@ -73,7 +73,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        userRole,
+        currentUser,
         signIn,
         logout,
       }}

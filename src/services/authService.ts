@@ -1,5 +1,7 @@
 import { axiosClient } from 'src/constants/api';
-import { Paths } from 'src/schema';
+import { Components, Paths } from 'src/schema';
+
+export type CurrentUser = Components.Schemas.CurrentUserDto;
 
 export class AuthService {
   public static async login(data: Paths.AuthLogin.RequestBody) {
@@ -7,6 +9,6 @@ export class AuthService {
   }
 
   public static getCurrentAuthData = async () => {
-    return (await axiosClient).AuthCurrent();
+    return (await (await axiosClient).AuthCurrent()).data;
   };
 }

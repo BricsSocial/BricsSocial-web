@@ -49,7 +49,7 @@ export const CreateVacancyModal: React.FC<CreateVacancyModalProps> = ({ afterSub
     try {
       await createVacancy({
         ...data,
-        skillTags: data.skillTags.join(';'),
+        skillTags: data.skillTags.join(','),
       });
       spawnNotification('Vacancy successfully created', 'success');
       afterSubmit();
@@ -98,10 +98,7 @@ export const CreateVacancyModal: React.FC<CreateVacancyModalProps> = ({ afterSub
           />
         </Grid>
         <Grid container mt={2} justifyContent="center" gap={4}>
-          <Button variant="outlined" disabled={creatingVacancy}>
-            Cancel
-          </Button>
-          <Button variant="contained" type="submit" disabled={creatingVacancy}>
+          <Button variant="contained" type="submit" color="success" disabled={creatingVacancy}>
             Submit
           </Button>
         </Grid>
