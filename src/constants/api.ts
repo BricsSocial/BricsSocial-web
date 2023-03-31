@@ -2,7 +2,8 @@ import OpenAPIClientAxios from 'openapi-client-axios';
 
 import { Client } from 'src/schema';
 
-export const BASE_API_URL = process.env.API_URL || 'http://158.160.37.250';
+export const BASE_API_URL = import.meta.env.VITE_API_URL;
+
 export const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'accessToken';
 
 export enum UserRole {
