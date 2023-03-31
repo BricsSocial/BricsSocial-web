@@ -34,7 +34,7 @@ export const SignInPage: React.FC = () => {
 
   const onSubmit = async (data: SignInFormData) => {
     if (await signIn(data)) {
-      navigate(appRoutes.home.index);
+      navigate(appRoutes.app.index);
     }
   };
 

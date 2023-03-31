@@ -10,3 +10,5 @@ export * from './VacanciesPage';
 export * from './VacancyProfilePage';
 
 export * from './RepliesPage';
+
+export * from './AgentAccountPage';

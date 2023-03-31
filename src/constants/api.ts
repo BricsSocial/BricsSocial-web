@@ -19,9 +19,15 @@ const api = new OpenAPIClientAxios({
 api.init();
 
 export const axiosClient = api.getClient<Client>().then(client => {
-  client.interceptors.request.use(config => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)}`;
-    return config;
-  });
+  client.interceptors.request.use(
+    config => {
+      config.headers.Authorization = `Bearer ${localStorage.getItem(
+        ACCESS_TOKEN_LOCAL_STORAGE_KEY,
+      )}`;
+      return config;
+    },
+    console.log,
+    { synchronous: false },
+  );
   return client;
 });

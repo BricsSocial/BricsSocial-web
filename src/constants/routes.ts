@@ -1,7 +1,8 @@
 import { RouterPathParam } from './router';
 
-export const home = {
+export const app = {
   index: '/',
+  account: '/account',
 };
 
 export const auth = {

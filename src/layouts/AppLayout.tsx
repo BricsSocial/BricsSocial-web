@@ -25,7 +25,7 @@ import {
   Typography,
 } from '@mui/material';
 import { matchPath, useLocation, useNavigate } from 'react-router';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { BRICS_LOGO } from 'src/assets';
 import { Popover } from 'src/components/common';
@@ -66,15 +66,14 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
       <Box>
         <List>
-          {/* <ListItem disablePadding>
-        <ListItemButton component={Link} to={accountRoute}>
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="My account" />
-        </ListItemButton>
-      </ListItem> */}
-
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={appRoutes.app.account}>
+              <ListItemIcon>
+                <AccountIcon />
+              </ListItemIcon>
+              <ListItemText primary="My account" />
+            </ListItemButton>
+          </ListItem>
           <ListItem disablePadding>
             <ListItemButton onClick={() => logout()}>
               <ListItemIcon>

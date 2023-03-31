@@ -2,14 +2,12 @@ import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, MenuItem, Select, TextField, Typography } from '@mui/material';
-import SelectInput from '@mui/material/Select/SelectInput';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { ModalId } from 'src/constants';
 import { useModal, useNotifications, useRequest } from 'src/hooks';
 import { VacanciesService, Vacancy } from 'src/services';
-import { Required } from 'src/types';
 
 import { Modal, TagSelectField } from '../common';
 
@@ -45,6 +43,7 @@ export const EditVacancyModal: React.FC<EditVacancyModalProps> = ({ afterSubmit 
     },
     resolver: yupResolver(schema),
   });
+
   React.useEffect(
     () =>
       reset({

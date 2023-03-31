@@ -28,7 +28,7 @@ export const RepliesPage: React.FC = () => {
           return [
             <GridActionsCellItem
               icon={shouldReply ? <ReplyIcon /> : <InfoIcon />}
-              onClick={() => openModal(ModalId.ViewReply, { reply: row, shouldReply })}
+              onClick={() => openModal(ModalId.ViewReplyModal, { reply: row, shouldReply })}
               label={shouldReply ? 'Reply' : 'View Info'}
               showInMenu
             />,

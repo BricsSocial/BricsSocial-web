@@ -86,8 +86,19 @@ export const VacanciesPage: React.FC = () => {
           );
         },
       },
+      {
+        field: 'skillTags',
+        headerName: 'Skill Tags',
+        minWidth: 500,
+        flex: 1,
+        renderCell: ({ row }) => {
+          return row.skillTags
+            ?.split(',')
+            .map(tag => <Chip key={tag} label={tag} sx={{ mr: 1 }} />);
+        },
+      },
     ],
-    [],
+    [navigate, openModal],
   );
 
   return (

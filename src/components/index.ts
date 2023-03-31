@@ -6,3 +6,5 @@ export * from './ViewReplyModal';
 
 export * from './CreateVacancyModal';
 export * from './EditVacancyModal';
+
+export * from './EditCompanyModal';
