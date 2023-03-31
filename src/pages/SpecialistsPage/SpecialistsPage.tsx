@@ -1,20 +1,24 @@
 import React from 'react';
 
 import { AlternateEmail as RequestIcon, AccountBox as ProfileIcon } from '@mui/icons-material';
-import { Box, Link, SxProps, Tooltip, Typography } from '@mui/material';
+import { Box, Link, Skeleton, SxProps, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
+import ReactCountryFlag from 'react-country-flag';
 import { generatePath, useNavigate } from 'react-router';
 
 import { VacancyRequestModal, VacancyRequestModalArgs } from 'src/components';
-import { appRoutes, ModalId, RouterPathParam } from 'src/constants';
+import { appRoutes, COUNTRY_NAME_TO_CODE_MAPPING, ModalId, RouterPathParam } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
-import { Specialist, SpecialistsService } from 'src/services';
+import { CountriesService, Specialist, SpecialistsService } from 'src/services';
 
 export const SpecialistsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { openModal } = useModal<VacancyRequestModalArgs>();
   const { data, isLoading } = useRequest(SpecialistsService.getSpecialistsList);
+  const { data: countries, isLoading: loadingCountries } = useRequest(CountriesService.getContries);
+
+  console.log(countries, loadingCountries);
 
   const columns: GridColDef<Specialist>[] = React.useMemo(
     () => [
@@ -58,6 +62,39 @@ export const SpecialistsPage: React.FC = () => {
         renderCell: ({ row }) => <Link href={`mailto:${row?.email}`}>{row?.email}</Link>,
       },
       {
+        field: 'contry',
+        headerName: 'Country',
+        flex: 1,
+        minWidth: 200,
+        renderCell: ({ row }) => {
+          if (loadingCountries) {
+            return <Skeleton height={40} width={100} />;
+          }
+
+          if (!row.countryId) {
+            return null;
+          }
+
+          const countryName = countries?.[row.countryId]?.name;
+
+          return (
+            !!countryName && (
+              <React.Fragment>
+                {countryName}
+                <ReactCountryFlag
+                  style={{ marginLeft: 4 }}
+                  svg
+                  aria-label={countryName}
+                  title={countryName}
+                  countryCode={COUNTRY_NAME_TO_CODE_MAPPING[countryName]}
+                />
+              </React.Fragment>
+            )
+          );
+        },
+        valueGetter: ({ row }) => (row.countryId ? countries?.[row.countryId]?.name : null),
+      },
+      {
         field: 'about',
         headerName: 'About',
         flex: 1,
@@ -88,7 +125,7 @@ export const SpecialistsPage: React.FC = () => {
         },
       },
     ],
-    [navigate, openModal],
+    [navigate, openModal, loadingCountries, countries],
   );
 
   return (

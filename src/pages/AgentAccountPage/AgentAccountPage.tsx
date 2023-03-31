@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Avatar, Box, Button, Card, Grid, Skeleton, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, Grid, Skeleton, SxProps, Typography } from '@mui/material';
+import ReactCountryFlag from 'react-country-flag';
 
 import { DEFAULT_AVATAR } from 'src/assets';
 import { EditCompanyModal, EditCompanyModalArgs } from 'src/components';
-import { ModalId } from 'src/constants';
+import { COUNTRY_NAME_TO_CODE_MAPPING, ModalId } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
+import { CountriesService } from 'src/services';
 import { AgentService } from 'src/services/agentsService';
 import { CompaniesService } from 'src/services/companiesService';
 
@@ -17,6 +19,10 @@ export const AgentAccountPage: React.FC = () => {
     isLoading: loadingCompany,
     makeRequest: refetchCompany,
   } = useRequest(CompaniesService.getCompany, false, agent?.companyId);
+
+  const { data: countries } = useRequest(CountriesService.getContries);
+
+  const companyCountryName = countries?.find(country => country.id === company?.countryId)?.name;
 
   return (
     <Grid container gap={2} direction="row" wrap="nowrap" justifyContent="stretch">
@@ -63,6 +69,7 @@ export const AgentAccountPage: React.FC = () => {
           </Grid>
         </Card>
       )}
+
       {loadingCompany ? (
         <Skeleton width={200} height={40} />
       ) : (
@@ -101,6 +108,22 @@ export const AgentAccountPage: React.FC = () => {
                 </Typography>
                 <Typography component="span">{company?.description}</Typography>
               </Box>
+              <Box>
+                <Typography component="span" fontWeight={500} mr={1}>
+                  Country:
+                </Typography>
+                <Typography component="span">
+                  {companyCountryName}{' '}
+                  {companyCountryName && (
+                    <ReactCountryFlag
+                      svg
+                      aria-label={companyCountryName}
+                      title={companyCountryName}
+                      countryCode={COUNTRY_NAME_TO_CODE_MAPPING[companyCountryName]}
+                    />
+                  )}
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
         </Card>
@@ -109,4 +132,17 @@ export const AgentAccountPage: React.FC = () => {
       <EditCompanyModal afterSubmit={() => refetchCompany(company?.id)} />
     </Grid>
   );
+};
+
+const contryBoxStyles: SxProps = {
+  position: 'absolute',
+  height: 32,
+  width: 32,
+  top: -6,
+  left: -6,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: '#000',
+  borderRadius: '50%',
 };

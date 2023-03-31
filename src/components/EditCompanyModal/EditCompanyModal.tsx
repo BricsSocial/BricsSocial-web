@@ -56,7 +56,7 @@ export const EditCompanyModal: React.FC<EditCompanyModalProps> = ({ afterSubmit 
   };
 
   return (
-    <Modal open={isOpen} onClose={() => closeModal} title="Edit company">
+    <Modal open={isOpen} onClose={() => closeModal()} title="Edit company">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container direction="column" wrap="nowrap" gap={2}>
           <TextField
