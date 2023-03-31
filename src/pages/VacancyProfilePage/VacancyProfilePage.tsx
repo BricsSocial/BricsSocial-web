@@ -29,7 +29,7 @@ export const VacancyProfilePage: React.FC = () => {
         </Typography>
       </Box>
       <Grid container direction="row" wrap="nowrap" gap={1}>
-        {skillTags && skillTags?.map(tag => <Chip label={tag} />)}
+        {skillTags && skillTags?.map(tag => <Chip key={tag} label={tag} />)}
       </Grid>
 
       <Grid container direction="row" wrap="nowrap" gap={1} justifyContent="stretch">

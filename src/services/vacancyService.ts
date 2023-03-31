@@ -20,12 +20,19 @@ export class VacanciesService {
     return (await axiosClient).VacanciesCreate(null, data);
   };
 
+  public static updateVacancy = async (
+    pathParams: Paths.VacanciesUpdate.PathParameters,
+    data: Components.Schemas.UpdateVacancyCommand,
+  ) => {
+    return (await (await axiosClient).VacanciesUpdate(pathParams, data)).data;
+  };
+
   public static deleteVacancies = async (pathParams: Paths.VacanciesDelete.PathParameters) => {
     return (await axiosClient).VacanciesDelete(pathParams);
   };
 
-  public static getReplies = async (params?: Paths.VacanciesGetReplies.QueryParameters) => {
-    return (await (await axiosClient).VacanciesGetReplies(params)).data;
+  public static getReplies = async (queryParams?: Paths.VacanciesGetReplies.QueryParameters) => {
+    return (await (await axiosClient).VacanciesGetReplies(queryParams)).data;
   };
 
   public static updateReply = async (
