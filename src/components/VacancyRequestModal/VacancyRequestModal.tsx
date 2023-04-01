@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import { ModalId } from 'src/constants/modals';
 import { useModal, useNotifications, useRequest } from 'src/hooks';
 import { Specialist, SpecialistsService, VacanciesService } from 'src/services';
+import { AgentService } from 'src/services/agentsService';
 
 import { Modal } from '../common';
 
@@ -35,11 +36,13 @@ export const VacancyRequestModal: React.FC = () => {
   } = useForm<VacancyRequestFormData>({
     resolver: yupResolver(schema),
   });
+  const { data: agent } = useRequest(AgentService.getCurrentAgent);
   const { data, isLoading: loadingVacancies } = useRequest(
     VacanciesService.getVacancies,
     { skip: !isOpen },
     {
       Status: 1,
+      CompanyId: agent?.companyId,
     },
   );
 
