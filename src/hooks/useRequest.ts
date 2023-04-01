@@ -35,12 +35,11 @@ export const useRequest = <T, R extends Array<unknown>, L extends boolean>(
 
   React.useEffect(() => {
     if (!_.isEqual(args, requestArgs)) setArgs(requestArgs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requestArgs]);
+  }, [requestArgs, args]);
 
   React.useEffect(() => {
     if (!lazy && !skip) {
-      makeRequest(...(args as R));
+      makeRequest(...(requestArgs as R));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [makeRequest, lazy, args, skip]);
