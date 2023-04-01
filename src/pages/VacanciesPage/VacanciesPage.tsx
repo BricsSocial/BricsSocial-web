@@ -125,7 +125,7 @@ export const VacanciesPage: React.FC = () => {
             onClick={async () => {
               // TODO: Open a 'Are you sure?' modal
               await deleteVacancy({ id: Array.from<any>(selectedRows?.values() || [])?.[0]?.id });
-              await refetchVacancies();
+              await refetchVacancies({ CompanyId: agent?.companyId });
             }}
             disabled={!selectedRows?.size}
           >
