@@ -39,7 +39,7 @@ export const VacancyRequestModal: React.FC = () => {
   const { data: agent } = useRequest(AgentService.getCurrentAgent);
   const { data, isLoading: loadingVacancies } = useRequest(
     VacanciesService.getVacancies,
-    { skip: !isOpen },
+    { skip: !isOpen || !agent?.companyId },
     {
       Status: 1,
       CompanyId: agent?.companyId,
