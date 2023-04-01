@@ -10,11 +10,7 @@ import { useModal, useRequest } from 'src/hooks';
 import { VacanciesService, VacancyReply } from 'src/services';
 
 export const RepliesPage: React.FC = () => {
-  const {
-    data,
-    isLoading,
-    makeRequest: refetchReplies,
-  } = useRequest(VacanciesService.getReplies, false);
+  const { data, isLoading, makeRequest: refetchReplies } = useRequest(VacanciesService.getReplies);
   const { openModal } = useModal<ViewReplyModalArgs>();
 
   const columns: GridColDef<VacancyReply>[] = React.useMemo(

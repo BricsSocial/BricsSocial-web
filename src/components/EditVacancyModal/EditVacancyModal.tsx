@@ -55,7 +55,7 @@ export const EditVacancyModal: React.FC<EditVacancyModalProps> = ({ afterSubmit 
 
   const { makeRequest: updateVacancy, isLoading: updatingVacancy } = useRequest(
     VacanciesService.updateVacancy,
-    true,
+    { lazy: true },
   );
 
   if (!vacancy?.id) {

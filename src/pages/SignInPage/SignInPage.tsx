@@ -30,7 +30,7 @@ export const SignInPage: React.FC = () => {
     reValidateMode: 'onChange',
   });
   const { signIn: signInFn } = useAuth();
-  const { makeRequest: signIn, isLoading } = useRequest(signInFn, true);
+  const { makeRequest: signIn, isLoading } = useRequest(signInFn, { lazy: true });
 
   const onSubmit = async (data: SignInFormData) => {
     if (await signIn(data)) {

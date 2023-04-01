@@ -35,21 +35,19 @@ export const VacancyRequestModal: React.FC = () => {
   } = useForm<VacancyRequestFormData>({
     resolver: yupResolver(schema),
   });
-  const {
-    data,
-    makeRequest: getVacancies,
-    isLoading: loadingVacancies,
-  } = useRequest(VacanciesService.getVacancies, true);
+  const { data, isLoading: loadingVacancies } = useRequest(
+    VacanciesService.getVacancies,
+    { skip: !isOpen },
+    {
+      Status: 1,
+    },
+  );
 
   const { makeRequest: createVacancyRequest, isLoading: creatingRequest } = useRequest(
     SpecialistsService.createVacancyRequest,
-    true,
+    { lazy: true },
   );
   const { spawnNotification } = useNotifications();
-
-  React.useEffect(() => {
-    getVacancies({ Status: 1 });
-  }, [getVacancies]);
 
   const vacancies = data?.items;
 

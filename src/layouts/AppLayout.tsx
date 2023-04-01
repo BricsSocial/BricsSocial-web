@@ -10,6 +10,7 @@ import {
 } from '@mui/icons-material';
 import {
   AppBar,
+  Avatar,
   Box,
   Drawer,
   drawerClasses,
@@ -30,7 +31,8 @@ import { Link } from 'react-router-dom';
 import { BRICS_LOGO } from 'src/assets';
 import { Popover } from 'src/components/common';
 import { appRoutes } from 'src/constants';
-import { useAuth } from 'src/hooks';
+import { useAuth, useRequest } from 'src/hooks';
+import { AgentService } from 'src/services/agentsService';
 
 type MenuItem = {
   link: string;
@@ -58,6 +60,7 @@ const menuItems: MenuItem[] = [
 
 export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { logout } = useAuth();
+  const { data: agent } = useRequest(AgentService.getCurrentAgent);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -69,7 +72,11 @@ export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
           <ListItem disablePadding>
             <ListItemButton component={Link} to={appRoutes.app.account}>
               <ListItemIcon>
-                <AccountIcon />
+                {agent?.photo ? (
+                  <Avatar src={agent.photo} sx={{ width: 24, height: 24 }} />
+                ) : (
+                  <AccountIcon />
+                )}
               </ListItemIcon>
               <ListItemText primary="My account" />
             </ListItemButton>

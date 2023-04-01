@@ -13,13 +13,13 @@ export const SpecialistProfilePage: React.FC = () => {
   const params = useParams();
   const specialistId = Number(params[RouterPathParam.specialistId]);
 
-  const { data: contries } = useRequest(CountriesService.getContries);
+  const { data: countries } = useRequest(CountriesService.getContries);
 
-  const { data: specialist } = useRequest(SpecialistsService.getSpecialist, false, {
+  const { data: specialist } = useRequest(SpecialistsService.getSpecialist, null, {
     id: specialistId,
   });
 
-  const specialistCountryName = contries?.find(
+  const specialistCountryName = countries?.find(
     country => country.id === specialist?.countryId,
   )?.name;
 

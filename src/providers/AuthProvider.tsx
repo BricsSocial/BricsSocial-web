@@ -59,7 +59,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     if (isAuthenticated) {
       (async () => {
         try {
-          console.log(localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY));
           setCurrentUser(await AuthService.getCurrentAuthData());
         } catch (error: any) {
           logout();
