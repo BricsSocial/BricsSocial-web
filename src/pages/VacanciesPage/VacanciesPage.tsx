@@ -147,8 +147,8 @@ export const VacanciesPage: React.FC = () => {
         apiRef={apiRef}
       />
 
-      <CreateVacancyModal afterSubmit={() => refetchVacancies()} />
-      <EditVacancyModal afterSubmit={() => refetchVacancies()} />
+      <CreateVacancyModal afterSubmit={() => refetchVacancies({ CompanyId: agent?.companyId })} />
+      <EditVacancyModal afterSubmit={() => refetchVacancies({ CompanyId: agent?.companyId })} />
     </Box>
   );
 };
