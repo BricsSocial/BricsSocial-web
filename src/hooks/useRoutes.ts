@@ -6,7 +6,8 @@ import { RouteProps } from 'src/types';
 import { useAuth } from './useAuth';
 
 export const useRoutes = (routesTree: RouteProps[]): RouteProps[] => {
-  const { userRole } = useAuth();
+  const { currentUser } = useAuth();
+  const userRole = currentUser?.role;
 
   const checkRouteAccess = React.useCallback(
     ({ accessRoles }: RouteProps): boolean => {

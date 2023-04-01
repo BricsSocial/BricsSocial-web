@@ -11,7 +11,7 @@ export const VacancyProfilePage: React.FC = () => {
   const params = useParams();
   const vacancyId = Number(params[RouterPathParam.vacancyId]);
 
-  const { data: vacancy } = useRequest(VacanciesService.getVacancy, false, vacancyId);
+  const { data: vacancy } = useRequest(VacanciesService.getVacancy, null, vacancyId);
   const skillTags = vacancy?.skillTags?.split(',');
 
   return (

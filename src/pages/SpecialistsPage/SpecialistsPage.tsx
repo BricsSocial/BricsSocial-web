@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AlternateEmail as RequestIcon, AccountBox as ProfileIcon } from '@mui/icons-material';
-import { Box, Link, Skeleton, SxProps, Tooltip, Typography } from '@mui/material';
+import { Box, Chip, Link, Skeleton, SxProps, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
 import ReactCountryFlag from 'react-country-flag';
 import { generatePath, useNavigate } from 'react-router';
@@ -17,8 +17,6 @@ export const SpecialistsPage: React.FC = () => {
   const { openModal } = useModal<VacancyRequestModalArgs>();
   const { data, isLoading } = useRequest(SpecialistsService.getSpecialistsList);
   const { data: countries, isLoading: loadingCountries } = useRequest(CountriesService.getContries);
-
-  console.log(countries, loadingCountries);
 
   const columns: GridColDef<Specialist>[] = React.useMemo(
     () => [
@@ -75,7 +73,7 @@ export const SpecialistsPage: React.FC = () => {
             return null;
           }
 
-          const countryName = countries?.[row.countryId]?.name;
+          const countryName = countries?.find(contry => contry.id === row.countryId)?.name;
 
           return (
             !!countryName && (
@@ -92,7 +90,18 @@ export const SpecialistsPage: React.FC = () => {
             )
           );
         },
-        valueGetter: ({ row }) => (row.countryId ? countries?.[row.countryId]?.name : null),
+        valueGetter: ({ row }) =>
+          row.countryId ? countries?.find(c => c.id === row.countryId)?.name : null,
+      },
+      {
+        field: 'skillTags',
+        headerName: 'Skill Tags',
+        minWidth: 300,
+        renderCell: ({ row }) => {
+          return row.skillTags
+            ?.split(',')
+            .map(tag => <Chip key={tag} label={tag} sx={{ mr: 1 }} />);
+        },
       },
       {
         field: 'about',

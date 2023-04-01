@@ -23,7 +23,9 @@ type ViewReplyModalProps = {
 export const ViewReplyModal: React.FC<ViewReplyModalProps> = ({ onAfterClose }) => {
   const { spawnNotification } = useNotifications();
   const { isOpen, closeModal, args } = useModal<ViewReplyModalArgs>(ModalId.ViewReplyModal);
-  const { makeRequest: updateReply, isLoading } = useRequest(VacanciesService.updateReply, true);
+  const { makeRequest: updateReply, isLoading } = useRequest(VacanciesService.updateReply, {
+    lazy: true,
+  });
   const reply = args?.reply;
   const shouldReply = args?.shouldReply;
 

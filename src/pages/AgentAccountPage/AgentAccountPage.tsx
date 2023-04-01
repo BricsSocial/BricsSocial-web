@@ -18,7 +18,7 @@ export const AgentAccountPage: React.FC = () => {
     data: company,
     isLoading: loadingCompany,
     makeRequest: refetchCompany,
-  } = useRequest(CompaniesService.getCompany, false, agent?.companyId);
+  } = useRequest(CompaniesService.getCompany, null, agent?.companyId);
 
   const { data: countries } = useRequest(CountriesService.getContries);
 

@@ -38,7 +38,7 @@ export const EditCompanyModal: React.FC<EditCompanyModalProps> = ({ afterSubmit 
 
   const { makeRequest: updateCompany, isLoading: updatingCompany } = useRequest(
     CompaniesService.updateCompany,
-    true,
+    { lazy: true },
   );
 
   if (!company) {

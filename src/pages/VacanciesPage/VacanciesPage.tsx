@@ -9,22 +9,28 @@ import { CreateVacancyModal, EditVacancyModal, EditVacancyModalArgs } from 'src/
 import { appRoutes, ModalId, RouterPathParam } from 'src/constants';
 import { useModal, useRequest } from 'src/hooks';
 import { VacanciesService, Vacancy } from 'src/services';
+import { AgentService } from 'src/services/agentsService';
 import { Nullable } from 'src/types';
 
 export const VacanciesPage: React.FC = () => {
   const apiRef = useGridApiRef();
   const navigate = useNavigate();
+  const { data: agent } = useRequest(AgentService.getCurrentAgent);
 
   const { openModal } = useModal();
   const {
     data,
     isLoading,
     makeRequest: refetchVacancies,
-  } = useRequest(VacanciesService.getVacancies);
+  } = useRequest(
+    VacanciesService.getVacancies,
+    { lazy: false, skip: !agent?.companyId },
+    { CompanyId: agent?.companyId },
+  );
 
   const { makeRequest: deleteVacancy, isLoading: deletingVacancy } = useRequest(
     VacanciesService.deleteVacancies,
-    true,
+    { lazy: true },
   );
 
   const [selectedRows, setSelectedRows] =

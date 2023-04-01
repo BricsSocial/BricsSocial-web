@@ -27,8 +27,9 @@ export const TagSelectField: React.FC<TagSelectFieldProps> = ({
     if (event.key === 'Enter') {
       event.preventDefault();
       const target = event.target as HTMLInputElement;
-      if (!tags.includes(target.value)) {
-        setTags([...tags, target.value]);
+      const targetValue = target.value.trim();
+      if (targetValue && !tags.includes(targetValue)) {
+        setTags([...tags, targetValue]);
         target.value = '';
       }
     }

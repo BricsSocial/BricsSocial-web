@@ -42,7 +42,7 @@ export const CreateVacancyModal: React.FC<CreateVacancyModalProps> = ({ afterSub
   });
   const { makeRequest: createVacancy, isLoading: creatingVacancy } = useRequest(
     VacanciesService.createVacancy,
-    true,
+    { lazy: true },
   );
 
   const onSubmit = async (data: CreateVacancyFormData) => {
